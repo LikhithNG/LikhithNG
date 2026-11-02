@@ -194,72 +194,6 @@ const keyframes = (name, loop, stops) => `@keyframes ${name}{${stops.map(([t, d]
 const windows = (name, loop, spans) => keyframes(name, loop, [[0, "opacity:0"], ...spans.flatMap(([a, b]) => [[a, "opacity:1"], [b, "opacity:0"]]), [loop, "opacity:0"]]);
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-/* ---------- "Ask Guru": the portfolio's chat window answering three questions on a loop ---------- */
-function chat() {
-  const W = 640, LOOP = 16, FADE = [14.6, 15.2];
-  const turns = [
-    { who: "you", at: 0.6, lines: ["What does Likhith build?"] },
-    { who: "guru", at: 2.0, lines: ["LLM products and RAG systems, end to end,", "plus the data pipelines behind them."] },
-    { who: "you", at: 4.4, lines: ["Is he open to work?"] },
-    { who: "guru", at: 5.8, lines: ["Yes: full-time AI/ML, LLM and data", "engineering roles from January 2027."] },
-    { who: "you", at: 8.2, lines: ["Which project should I look at first?"] },
-    { who: "guru", at: 9.6, lines: ["TravelBuddy: a LangGraph planner where a root", "agent routes requests to 3 specialist agents."] },
-  ];
-  const LINE = 21, PAD = 12, GAP = 12, CHAR = 7.9;
-  let y = 86;
-  const styles = [];
-  const bubbles = turns.map((turn, i) => {
-    const h = PAD * 2 + turn.lines.length * LINE - 4;
-    const w = Math.round(Math.max(...turn.lines.map((l) => l.length)) * CHAR + PAD * 2);
-    const x = turn.who === "you" ? W - 24 - w : 24;
-    const top = y;
-    y += h + GAP;
-    const fill = turn.who === "you" ? "#3b3a5c" : "#2b2c33";
-    const text = turn.lines.map((l, k) => `<text x="${x + PAD}" y="${top + PAD + 15 + k * LINE}" class="msg">${esc(l)}</text>`).join("");
-    styles.push(keyframes(`m${i}`, LOOP, [[0, "opacity:0;transform:translateY(8px)"], [turn.at, "opacity:0;transform:translateY(8px)"], [turn.at + 0.3, "opacity:1;transform:none"], [FADE[0], "opacity:1;transform:none"], [FADE[1], "opacity:0;transform:none"], [LOOP, "opacity:0;transform:none"]]));
-    let extra = "";
-    if (turn.who === "guru") {
-      // Guru "types": a cover the colour of the bubble shrinks off the words, and dots show while it thinks.
-      styles.push(keyframes(`c${i}`, LOOP, [[0, "transform:scaleX(1)"], [turn.at + 0.15, "transform:scaleX(1)"], [turn.at + 1.0, "transform:scaleX(0)"], [LOOP, "transform:scaleX(0)"]]));
-      styles.push(windows(`d${i}`, LOOP, [[turn.at - 1.0, turn.at]]));
-      extra = `<rect class="cover" style="animation-name:c${i}" x="${x + PAD - 2}" y="${top + PAD - 2}" width="${w - PAD * 2 + 6}" height="${h - PAD * 2 + 4}" fill="${fill}"/>`;
-      const dots = [0, 1, 2].map((k) => `<circle class="dot" style="animation-delay:${k * 0.15}s" cx="${44 + k * 12}" cy="${top + 20}" r="4"/>`).join("");
-      return `<g class="typing" style="animation-name:d${i}"><rect x="24" y="${top}" width="64" height="40" rx="16" fill="#2b2c33"/>${dots}</g>`
-        + `<g class="bubble" style="animation-name:m${i}"><rect x="${x}" y="${top}" width="${w}" height="${h}" rx="16" fill="${fill}"/>${text}${extra}</g>`;
-    }
-    return `<g class="bubble" style="animation-name:m${i}"><rect x="${x}" y="${top}" width="${w}" height="${h}" rx="16" fill="${fill}"/>${text}</g>`;
-  });
-  const H = y + 64;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Ask Guru. What does Likhith build? LLM products and RAG systems, end to end, plus the data pipelines behind them. Is he open to work? Yes: full-time AI/ML, LLM and data engineering roles from January 2027. Which project should I look at first? TravelBuddy: a LangGraph planner where a root agent routes requests to 3 specialist agents.">
-<style>
-text{${FONT}}
-.msg{font-size:15px;fill:#ececf1}
-.bubble{opacity:0;animation:${LOOP}s linear infinite}
-.cover{transform-box:fill-box;transform-origin:100% 50%;animation:${LOOP}s steps(28,end) infinite}
-.typing{opacity:0;animation:${LOOP}s steps(1,end) infinite}
-.dot{fill:#9a9ba6;animation:hop 1.2s ease-in-out infinite}
-@keyframes hop{0%,80%,100%{transform:translateY(0);fill-opacity:.35}40%{transform:translateY(-4px);fill-opacity:1}}
-.online{animation:pulse 2.4s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
-${styles.join("\n")}
-@media (prefers-reduced-motion:reduce){*{animation:none!important}.bubble{opacity:1}.cover,.typing{display:none}}
-</style>
-<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="18" fill="#1f2026" stroke="#ffffff" stroke-opacity=".1"/>
-${rects(rowsToCells(HEAD), 3, 22, 18)}
-<text x="66" y="36" font-size="16" font-weight="600" fill="#ececf1">Guru</text>
-<circle class="online" cx="112" cy="31" r="4" fill="#5eead4"/>
-<text x="66" y="55" font-size="12.5" fill="#9a9ba6">Your guide to Likhith's work</text>
-<line x1="0" y1="70" x2="${W}" y2="70" stroke="#ffffff" stroke-opacity=".08"/>
-${bubbles.join("\n")}
-<line x1="0" y1="${H - 62}" x2="${W}" y2="${H - 62}" stroke="#ffffff" stroke-opacity=".08"/>
-<rect x="16" y="${H - 48}" width="${W - 84}" height="36" rx="18" fill="#16171b" stroke="#ffffff" stroke-opacity=".08"/>
-<text x="34" y="${H - 25}" font-size="13.5" fill="#6f7080">Ask about projects, experience, skills…</text>
-<circle cx="${W - 40}" cy="${H - 30}" r="18" fill="#a5a1f0"/>
-<path d="M${W - 47} ${H - 30}l15 -7 -5 15 -3 -6z" fill="#16171b"/>
-</svg>
-`;
-}
-
 /* ---------- the journey: pixel Guru jumping up from one milestone to the next ---------- */
 function journey() {
   const W = 1280, H = 392, PX = 4, LOOP = 13;
@@ -381,6 +315,6 @@ ${tiles.join("\n")}
 }
 
 mkdirSync(new URL("../assets/", import.meta.url), { recursive: true });
-const ART = { "banner.svg": banner, "guru.svg": badge, "chat.svg": chat, "journey.svg": journey, "impact.svg": impact };
+const ART = { "banner.svg": banner, "guru.svg": badge, "journey.svg": journey, "impact.svg": impact };
 for (const [file, make] of Object.entries(ART)) writeFileSync(new URL(`../assets/${file}`, import.meta.url), make());
 console.log(`wrote ${Object.keys(ART).map((f) => `assets/${f}`).join(", ")}`);

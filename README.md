@@ -23,13 +23,6 @@ I'm an AI/ML engineer finishing my MS in Information Systems at Northeastern Uni
 
 <img src="assets/impact.svg" width="100%" alt="94% receipt-scanning accuracy at IPSER Labs. 1M+ options records processed in Snowflake in under 5 minutes. 30% less unplanned aircraft downtime at Bharat Electronics. A 120-question RAG eval with zero unauthorized retrievals.">
 
-### Ask Guru
-
-<p align="center">
-  <a href="https://likhith-ng-portfolio.vercel.app"><img src="assets/chat.svg" width="560" alt="Ask Guru. What does Likhith build? LLM products and RAG systems, end to end, plus the data pipelines behind them. Is he open to work? Yes: full-time AI/ML, LLM and data engineering roles from January 2027. Which project should I look at first? TravelBuddy: a LangGraph planner where a root agent routes requests to 3 specialist agents."></a><br>
-  <sub>Guru is the AI assistant on my portfolio. Ask it about my projects, experience or skills there.</sub>
-</p>
-
 ### My journey
 
 <img src="assets/journey.svg" width="100%" alt="B.E. Information Science at BNM Institute of Technology (Aug 2019 – May 2023), Data Analyst Intern at Compsoft Technologies (Aug 2022 – Jan 2023), Data Engineer Intern at Bharat Electronics Limited (Jul – Dec 2023), MS Information Systems at Northeastern University (Sep 2024 – Dec 2026), AI/ML Engineering Intern at IPSER Labs (Jan – Jun 2026), and open to full-time roles from January 2027.">
