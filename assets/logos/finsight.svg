@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="10" y1="8" x2="54" y2="56">
+      <stop offset="0" stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <radialGradient id="aura" cx="0.22" cy="0.12" r="1">
+      <stop offset="0" stop-color="#4ade80" stop-opacity="0.42"/>
+      <stop offset="0.45" stop-color="#38bdf8" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4ade80" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0.75"/>
+    </linearGradient>
+    <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.55" fill="#fff" fill-opacity="0.08"/>
+    </pattern>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.6"/>
+    </filter>
+    <clipPath id="tile"><rect width="64" height="64" rx="16"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="64" height="64" fill="#0b0d14"/>
+    <rect width="64" height="64" fill="url(#aura)"/>
+    <rect width="64" height="64" fill="url(#dots)"/>
+    <path d="M0 0H64V20C44 13 20 13 0 20Z" fill="#fff" fill-opacity="0.05"/>
+  </g>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="15.25" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+  <g fill="none" stroke="url(#ink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" opacity="0.9">
+    <circle cx="28" cy="28" r="13"/>
+    <path d="M38 38 48 48"/>
+    <path d="M20 32 25 27 29 30 35 23"/>
+    <circle cx="35" cy="23" r="1.2" fill="url(#ink)"/>
+  </g>
+  <g fill="none" stroke="url(#ink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="28" cy="28" r="13"/>
+    <path d="M38 38 48 48"/>
+    <path d="M20 32 25 27 29 30 35 23"/>
+    <circle cx="35" cy="23" r="1.2" fill="url(#ink)"/>
+  </g>
+</svg>
